@@ -59,7 +59,7 @@
 			 * incluso la vista parcial home.php
 			 */
 			// echo $this->view->render($this->config->get('viewsDir').'header.php');
-			echo "versión alpha en construcción".
+			echo "versión alpha en construcción";
 
 		}
 	}
