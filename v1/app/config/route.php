@@ -42,8 +42,7 @@
 				 * Se llama y se crea un objeto de la clase Home 
 				 * para este ejemplo
 				 */
-				require_once($config->get('controllersDir').'Home.php');
-				$home = new Home($config);
+				echo json_encode(array('response' => false));
 
 				/**
 				 * Se llama y retorna la función indexAction() de la clase
@@ -56,7 +55,7 @@
 			 * se termina el switch
 			 */
 			case 'hola': 
-				echo "hola";
+				echo json_encode(array('response' => false));
 				break;
 			
 			default:
@@ -69,10 +68,20 @@
 		 * No está implementado, pero es similar a los pasos del
 		 * Método GET con el switch
 		 */
+	}elseif($ruta->get() == 'PUT'){
+		/**
+		 * No está implementado, pero es similar a los pasos del
+		 * Método DELETE con el switch
+		 */
+	}elseif($ruta->get() == 'DELETE'){
+		/**
+		 * No está implementado, pero es similar a los pasos del
+		 * Método UPDATE con el switch
+		 */
 	}else{
 		/**
 		 * Pueden agregarse más Métodos
 		 */
-		echo "Nothing";
+		echo json_encode(array('response' => false));
 	}
  ?>
