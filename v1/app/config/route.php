@@ -6,8 +6,17 @@
 	require_once($config->get('baseDir').'Router.php');
 	$ruta = new Router();
 
-	require_once($config->get('controllersDir').'usuarios/registrar.php');
-	$registrar = new Registrar($config);
+	/**
+	 * Controlador para el login
+	 */
+	require_once($config->get('controllersDir').'usuarios/login.php');
+	$login = new Login($config);
+
+	/**
+	 * Controlador para los usuarios
+	 */
+	require_once($config->get('controllersDir').'usuarios/usuario.php');
+	$usuario = new Usuario($config);
 
 	
 	/**
@@ -27,28 +36,14 @@
 		 * El Switch utiliza una accion dependiendo de la ruta.
 		 */
 		switch ($enlace[$config->get('deep')]){
-			case '':
-				/**
-				 * Se llama y se crea un objeto de la clase Home 
-				 * para este ejemplo
-				 */
-				echo json_encode(array('response' => "get_sin_ruta"));
-
-				break; // Se finaliza el switch
-			/**
-			 * Si la direción es /hola, se hace un echo con hola y
-			 * se termina el switch
-			 */
-			case 'hola': 
-				
-				//echo json_encode(array('response' => true));
-				$registrar->obtenerUsuarios();	
-				break;
 
 			case 'usuarios':
-				echo json_encode(array('response' => 'get_usuarios'));
+
+				$usuario->obtenerUsuarios();	
+
 				break;
 			
+			case '':
 			default:
 				echo json_encode(array('response' => "get_null"));
 				break;
@@ -62,15 +57,14 @@
 		$enlace = $ruta->enlace();
 
 		switch ($enlace[$config->get('deep')]) {
-			case '':
-				echo json_encode(array('response' => "post_sin_ruta"));
-				break;
+
 			case 'usuarios':
 
-				$registrar->crearUsuario();
+				$usuario->crearUsuario();
 
 				break;
 			
+			case '':
 			default:
 				echo json_encode(array('response' => "post_null"));
 				break;
@@ -78,17 +72,22 @@
 	}elseif($ruta->get() == 'PUT'){
 		/**
 		 * No está implementado, pero es similar a los pasos del
-		 * Método PUT con el switch
+		 * Método POST con el switch, PUT se refiere a ingresar
+		 * o actualizar un elemento
 		 */
 		$enlace = $ruta->enlace();
 
 		switch ($enlace[$config->get('deep')]) {
-			case '':
-				echo json_encode(array('response' => "put_sin_ruta"));
+
+			case 'usuarios':
+				
+				$usuario->updateUser();
+
 				break;
 			
+			case '':
 			default:
-				echo json_encode(array('response' => "put_null"));
+				echo json_encode(array('response' => false));
 				break;
 		}
 	}elseif($ruta->get() == 'DELETE'){
@@ -99,10 +98,14 @@
 		$enlace = $ruta->enlace();
 
 		switch ($enlace[$config->get('deep')]) {
-			case '':
-				echo json_encode(array('response' => "delete_sin_ruta"));
+
+			case 'usuarios':
+				
+				$usuario->delUser();
+
 				break;
 			
+			case '':
 			default:
 				echo json_encode(array('response' => "delete_null"));
 				break;

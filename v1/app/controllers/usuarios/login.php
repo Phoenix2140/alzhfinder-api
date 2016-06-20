@@ -1,6 +1,6 @@
 <?php 
 
-	Class Registrar{
+	Class Login{
 		private $config;
 		private $jsonGet;
 		private $usuario;
@@ -28,27 +28,21 @@
 		/**
 		 * Crear nuevo usuario (Por ahora sin seguridad para verificar que se están creando)
 		 */
-		public function crearUsuario(){
+		public function login(){
 			//Comprobamos que los datos enviados sean válidos
 			if($this->comprobarDatos($this->jsonGet)){
-				
-				$token = md5($this->jsonGet->email.time());
-
-				$this->usuario->crearUsuario( $this->jsonGet->email, $this->jsonGet->pass, 
-					$this->jsonGet->user, $token );
 
 				echo json_encode(array('response' => true));
 
 			}else{
 
 				echo json_encode(array('response' => false));
-
+				
 			}
 		}
 
 		public function comprobarDatos($json){
-			if(isset($json->user) && isset($json->pass) && 
-				isset($json->email)){
+			if(isset($json->user) && isset($json->pass)){
 
 				return true;
 
