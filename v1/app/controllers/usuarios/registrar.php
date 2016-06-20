@@ -30,7 +30,7 @@
 		 */
 		public function crearUsuario(){
 			//echo $this->jsonGet;
-			echo json_encode(array('Respuesta' => 'OK', 'jsonGet' => $_SERVER["HTTP_DATOS"]));
+			echo json_encode(array('Respuesta' => 'OK', 'jsonGet' => $this->jsonGet);
 		}
 
 		public function obtenerUsuarios(){
