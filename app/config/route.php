@@ -30,6 +30,12 @@
 	require_once($config->get('controllersDir').'contactos/contactosController.php');
 	$contactos = new ContactosController($config);
 
+	/**
+	 * Controlador para obtener el seguimieto
+	 */
+	require_once($config->get('controllersDir').'seguimientos/SeguimientoController.php');
+	$seguimientos = new SeguimientoController($config);
+
 	
 	/**
 	 * Se separan las rutas por los métodos GET y POST
@@ -70,6 +76,14 @@
 			case 'contacto':
 				if(isset($enlace[$config->get('deep')+1]) && $enlace[$config->get('deep')+2]){
 					$contactos->obtenerContactoPacienteID($enlace[$config->get('deep')+1], $enlace[$config->get('deep')+2]);
+				}else{
+					echo json_encode(array('response' => false));
+				}
+				break;
+
+			case 'seguimiento':
+				if(isset($enlace[$config->get('deep')+1]) && $enlace[$config->get('deep')+2]){
+					$seguimientos->obtenerSeguimientoPaciente($enlace[$config->get('deep')+1], $enlace[$config->get('deep')+2]);
 				}else{
 					echo json_encode(array('response' => false));
 				}

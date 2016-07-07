@@ -21,7 +21,7 @@
 		 * Agregamos la posición, la fecha y hora al registro del paciente
 		 */
 		public function crearSeguiguiento($paciente, $rastreador, $xpos, $ypos, $fecha, $hora){
-			$this->db->query("INSERT INTO sguimientos (id_pacientes, id_rastreador, x_pos, y_pos, fecha, hora) 
+			$this->db->query("INSERT INTO segimientos (id_pacientes, id_rastreador, x_pos, y_pos, fecha, hora) 
 				VALUES (:paciente, :rastreador, :xpos, :ypos, :fecha, :hora)");
 
 			$this->db->bind(':paciente', $paciente);
@@ -39,7 +39,7 @@
 		 * Obtenemos los datos de posición de un paciente
 		 */
 		public function obtenerSeguimientoPacienteId($paciente){
-			$this->db->query("SELECT * FROM seguimientos WHERE id_pacientes=:paciente");
+			$this->db->query("SELECT * FROM segimientos WHERE id_pacientes=:paciente");
 
 			$this->db->bind(':paciente', $paciente);
 
@@ -50,7 +50,7 @@
 		 * Obtenemos los datos de posición de un rasatreador
 		 */
 		public function obtenerSeguimientoRastreadorId($rastreador){
-			$this->db->query("SELECT * FROM seguimientos WHERE id_rastreador=:rastreador");
+			$this->db->query("SELECT * FROM segimientos WHERE id_rastreador=:rastreador");
 
 			$this->db->bind(':rastreador', $rastreador);
 
@@ -62,7 +62,7 @@
 		 * (revisar)
 		 */
 		public function obtenerSeguimiento(){
-			$this->db->query("SELECT * FROM seguimientos");
+			$this->db->query("SELECT * FROM segimientos");
 
 			return $this->db->resultSet();
 		}
@@ -72,7 +72,7 @@
 		 * (Ver utilizad al eliminar un paciente)
 		 */
 		public function delSeguimientoPacienteId($paciente){
-			$this->db->query("DELETE FROM seguimientos WHERE id_pacientes=:paciente");
+			$this->db->query("DELETE FROM segimientos WHERE id_pacientes=:paciente");
 
 			$this->db->bind(':paciente', $paciente);
 
