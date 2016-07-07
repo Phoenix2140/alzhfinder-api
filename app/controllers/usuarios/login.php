@@ -37,7 +37,7 @@
 
 				if(isset($user["token_key"]) && !is_null($user["token_key"])){
 
-					echo json_encode(array('response' => true, 'key' => $user["token_key"]));
+					echo json_encode(array('response' => true, 'key' => $user["token_key"], 'username' => $user["nombre"]));
 				}else{
 					echo json_encode(array('response' => false));				
 				}

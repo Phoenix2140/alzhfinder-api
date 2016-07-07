@@ -37,6 +37,17 @@
 		}
 
 		/**
+		 * Función que obtiene el usuario por su llave de acceso
+		 */
+		public function getUserKey($key){
+			$this->db->query("SELECT * FROM usuarios WHERE token_key=:key");
+
+			$this->db->bind(':key', $key);
+
+			return $this->db->single();
+		}
+
+		/**
 		 * Función que obtiene el usuario por el email y la contraseña
 		 */
 		public function getUsuarioLogin($email, $pass){

@@ -24,6 +24,12 @@
 	require_once($config->get('controllersDir').'pacientes/paciente.php');
 	$pacientes = new Paciente($config);
 
+	/**
+	 * Controlador para obtener contactos
+	 */
+	require_once($config->get('controllersDir').'contactos/contactosController.php');
+	$contactos = new ContactosController($config);
+
 	
 	/**
 	 * Se separan las rutas por los métodos GET y POST
@@ -49,7 +55,24 @@
 				break;
 			case 'pacientes':
 				
-				$pacientes->obtenerPacientes();
+				/**
+				 * Si se envía la llave, se realiza la operación
+				 */
+				if (isset($enlace[$config->get('deep')+1])) {
+					$pacientes->obtenerPacientesUsuario($enlace[$config->get('deep')+1]);
+				} else {
+					echo json_encode(array('response' => false, 
+						'msg' => "Error al obtener pacientes, no se envío la llave"));
+				}
+				
+				break;
+
+			case 'contacto':
+				if(isset($enlace[$config->get('deep')+1]) && $enlace[$config->get('deep')+2]){
+					$contactos->obtenerContactoPacienteID($enlace[$config->get('deep')+1], $enlace[$config->get('deep')+2]);
+				}else{
+					echo json_encode(array('response' => false));
+				}
 				break;
 			
 			case '':

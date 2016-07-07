@@ -4,6 +4,7 @@
 		private $config;
 		private $datos;
 		private $paciente;
+		private $authController;
 
 		/**
 		 * Contructor de la clase
@@ -16,6 +17,9 @@
 			 */
 			require_once($this->config->get('modelsDir').'Pacientes.php');
 			$this->paciente = new Pacientes($this->config);
+
+			require_once($this->config->get('controllersDir').'AuthController.php');
+			$this->authController = new AuthController($this->config);
 
 			/**
 			 * Obtenemos los datos enviados por el Cliente
@@ -56,6 +60,22 @@
 		/**
 		 * Obtenemos todos los pacientes de un usuario
 		 */
+		public function obtenerPacientesUsuario($key){
+			if ($this->comprobarNulo($key)) {
+				$user = $this->authController->getUserKey($key);
+				
+				if ($user["return"]) {
+					$datos = $this->paciente->getPacientesPorUsuarioId($user["usuario"]["id_usuarios"]);
+					echo json_encode(array('response' => true, 'pacientes' => $datos));
+				} else {
+					echo json_encode(array('response' => false));
+				}
+				
+			} else {
+				echo json_encode(array('response' => false));
+			}
+			
+		}
 
 		/**
 		 * Actualizamos los datos de un paciente con su ID y nuevos datos
@@ -92,7 +112,7 @@
 		 * Comprobamos que existan los campos user, pass y email
 		 * en el json
 		 */
-		public function comprobarDatos($json){
+		private function comprobarDatos($json){
 			if(isset($json->nombre) && isset($json->pass) && 
 				isset($json->email)){
 
@@ -103,13 +123,11 @@
 			}
 		}
 
-
-
 		/**
 		 * Comprobamos que el campo ID contenga datos, además que
 		 * la validación de comprobarDatos() sea true
 		 */
-		public function comprobarpaciente($json){
+		private function comprobarpaciente($json){
 			if($this->comprobarID($json) && $this->comprobarDatos($json)){
 
 				return true;
@@ -122,7 +140,7 @@
 		/**
 		 * Verificamos que exista el campo ID
 		 */
-		public function comprobarID($json){
+		private function comprobarID($json){
 			if (isset($json->id)) {
 				
 				return true;
@@ -130,6 +148,25 @@
 				
 				return false;
 			}
+		}
+
+		/**
+		 * Comprobar llave de autentificación
+		 */
+		private function comprobarKey($key){
+
+		}
+
+		/**
+		 * Comprobamos que los datos enviados no lleguen vacíós
+		 */
+		private function comprobarNulo($valor){
+			if (isset($valor) && !is_null($valor)) {
+				return true;
+			} else {
+				return false;
+			}
+			
 		}
 
 		/**
