@@ -18,6 +18,12 @@
 	require_once($config->get('controllersDir').'usuarios/usuario.php');
 	$usuario = new Usuario($config);
 
+	/**
+	 * Controlador para obtener los pacientes
+	 */
+	require_once($config->get('controllersDir').'pacientes/paciente.php');
+	$pacientes = new Paciente($config);
+
 	
 	/**
 	 * Se separan las rutas por los métodos GET y POST
@@ -39,8 +45,11 @@
 
 			case 'usuarios':
 
-				$usuario->obtenerUsuarios();	
-
+				$usuario->obtenerUsuarios();
+				break;
+			case 'pacientes':
+				
+				$pacientes->obtenerPacientes();
 				break;
 			
 			case '':
@@ -62,6 +71,9 @@
 
 				$usuario->crearUsuario();
 
+				break;
+			case 'login':
+				$login->login();
 				break;
 			
 			case '':

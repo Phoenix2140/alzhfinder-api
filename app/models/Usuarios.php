@@ -37,6 +37,18 @@
 		}
 
 		/**
+		 * Función que obtiene el usuario por el email y la contraseña
+		 */
+		public function getUsuarioLogin($email, $pass){
+			$this->db->query("SELECT * FROM usuarios WHERE email=:email AND pass=:pass");
+
+			$this->db->bind(':email', $email);
+			$this->db->bind(':pass', $pass);
+
+			return $this->db->single();
+		}
+
+		/**
 		 * Función que obtiene determinado usuario por la ID de este
 		 */
 		public function getUsuarioId($id){

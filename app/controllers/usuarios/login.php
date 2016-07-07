@@ -20,7 +20,7 @@
 			/**
 			 * Obtenemos los jsonGet enviados por el Cliente
 			 */
-			//$this->jsonGet = file_get_contents("php://input");
+			// $this->jsonGet = file_get_contents("php://input");
 			$this->jsonGet = json_decode( file_get_contents('php://input') );
 		}
 
@@ -32,24 +32,32 @@
 			//Comprobamos que los datos enviados sean válidos
 			if($this->comprobarDatos($this->jsonGet)){
 
-				echo json_encode(array('response' => true));
+				
+				$user = $this->usuario->getUsuarioLogin($this->jsonGet->user, $this->jsonGet->pass);
+
+				if(isset($user["token_key"]) && !is_null($user["token_key"])){
+
+					echo json_encode(array('response' => true, 'key' => $user["token_key"]));
+				}else{
+					echo json_encode(array('response' => false));				
+				}
 
 			}else{
-
 				echo json_encode(array('response' => false));
 				
 			}
 		}
 
+		/**
+		 * Comprobar Datos
+		 */
 		public function comprobarDatos($json){
 			if(isset($json->user) && isset($json->pass)){
 
 				return true;
-
 			}else{
 
 				return false;
-
 			}
 		}
 	}

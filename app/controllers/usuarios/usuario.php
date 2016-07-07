@@ -32,7 +32,7 @@
 			//Comprobamos que los datos enviados sean válidos
 			if($this->comprobarDatos($this->jsonGet)){
 				
-				$token = md5($this->jsonGet->email.time());
+				$token = md5($this->jsonGet->email).md5(time());
 
 				$this->usuario->crearUsuario( $this->jsonGet->email, $this->jsonGet->pass, 
 					$this->jsonGet->nombre, $token );
